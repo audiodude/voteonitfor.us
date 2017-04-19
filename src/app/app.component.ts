@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { BackendService } from './backend.service';
+
 declare var gapi:any;
 
 @Component({
@@ -8,6 +10,13 @@ declare var gapi:any;
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  message: string;
+
+  constructor(private BackendService: BackendService) {
+    this.BackendService.getMessage().subscribe((msg: string) => {
+      this.message = msg;
+    });
+  }
 
   ngAfterViewInit() {
     gapi.signin2.render('g-signin', {
