@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-
-import { BackendService } from './backend.service';
-
-declare var gapi:any;
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,22 +9,5 @@ declare var gapi:any;
 export class AppComponent {
   message: string;
 
-  constructor(private BackendService: BackendService) {
-    this.BackendService.getMessage().subscribe((msg: string) => {
-      this.message = msg;
-    });
-  }
-
-  ngAfterViewInit() {
-    gapi.signin2.render('g-signin', {
-      'scope': 'profile email',
-      'width': 240,
-      'height': 50,
-      'onsuccess': this.onSignIn,
-    });
-  }
-
-  onSignIn = (googleUser: any) => {
-    window.console.log(googleUser);
-  }
+  constructor(private router: Router) { }
 }
