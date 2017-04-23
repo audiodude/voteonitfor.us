@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 import { BackendService } from '../backend.service';
+import { UserService } from '../user.service';
 
 declare var gapi:any;
 
@@ -11,24 +12,23 @@ declare var gapi:any;
 })
 export class HomeComponent implements OnInit {
   message: string;
+  oldIsSignedIn: boolean;
+  isSignedIn: boolean;
 
-  constructor(private BackendService: BackendService) {
+  constructor(private BackendService: BackendService,
+              private UserService: UserService,
+              private ref: ChangeDetectorRef) {
     this.BackendService.getMessage().subscribe((msg: string) => {
       this.message = msg;
     });
-  }
-
-  ngAfterViewInit() {
-    gapi.signin2.render('g-signin', {
-      'scope': 'profile email',
-      'width': 240,
-      'height': 50,
-      'onsuccess': this.onSignIn,
+    this.UserService.getSignedInStatus().subscribe((signedIn) => {
+      this.isSignedIn = signedIn;
+      this.ref.detectChanges();
     });
   }
 
-  onSignIn = (googleUser: any) => {
-    window.console.log(googleUser);
+  signOut() {
+    this.UserService.signOut();
   }
 
   ngOnInit() {}

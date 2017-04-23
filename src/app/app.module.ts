@@ -6,8 +6,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BackendService } from './backend.service';
+import { UserService } from './user.service';
 import { ShowPollComponent } from './show-poll/show-poll.component';
 import { HomeComponent } from './home/home.component';
+import { GSigninComponent } from './g-signin/g-signin.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
@@ -19,6 +21,7 @@ const routes: Routes = [
     AppComponent,
     ShowPollComponent,
     HomeComponent,
+    GSigninComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,6 +31,7 @@ const routes: Routes = [
   ],
   providers: [
     BackendService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })
